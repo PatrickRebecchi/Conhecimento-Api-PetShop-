@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<ResponseError> orcamentoException(ExecutionControl.UserException ex){
+    public ResponseEntity<ResponseError> businessException(BusinessException ex){
         ResponseError responde = new ResponseError(
                 ex.getMessage(),
                 HttpStatus.BAD_REQUEST,

@@ -5,6 +5,8 @@ import com.teste.conhecimento.dto.response.ClienteResponse;
 import com.teste.conhecimento.entity.Cliente;
 import com.teste.conhecimento.exception.BusinessException;
 import com.teste.conhecimento.repository.ClienteRepository;
+import com.teste.conhecimento.validation.ValidacaoClienteCriar;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ import java.util.stream.Collectors;
 public class ClienteServico {
     @Autowired
     private ClienteRepository repository;
+
+    @Autowired
+    private List<ValidacaoClienteCriar> validacao;
 
     public List<ClienteResponse> obterTodosClientes() {
         return converteDados(repository.findAll());
@@ -48,6 +53,20 @@ public class ClienteServico {
                 .collect(Collectors.toList());
     }
 
-    public ClienteRequest criarCliente(ClienteRequest dto) {
+    @Transactional
+    public ClienteResponse criarCliente(ClienteRequest dto) {
+
+        validacao.forEach(c -> c.validar(dto));
+        Cliente cliente = new Cliente(dto);
+
+        cliente = repository.save(cliente);
+
+        return new ClienteResponse(
+                cliente.getId(),
+                cliente.getNome(),
+                cliente.getTelefone(),
+                cliente.getEmail(),
+                0
+        );
     }
 }

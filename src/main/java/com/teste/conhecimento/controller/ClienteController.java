@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cliente")
-public class Cliente {
+public class ClienteController {
     @Autowired
     private ClienteServico servico;
 
@@ -29,7 +29,7 @@ public class Cliente {
     }
 
     @PostMapping
-    public ResponseEntity<ClienteRequest> CriarCliente(@RequestBody @Valid ClienteRequest dto){
+    public ResponseEntity<ClienteResponse> CriarCliente(@RequestBody @Valid ClienteRequest dto){
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(servico.criarCliente(dto));
     }
