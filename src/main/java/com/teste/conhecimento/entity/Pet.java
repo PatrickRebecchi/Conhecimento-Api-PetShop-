@@ -4,10 +4,14 @@ import com.teste.conhecimento.entity.enums.Especie;
 import com.teste.conhecimento.entity.enums.Sexo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
-
+@Getter
+@Setter
 @Entity
+@Table(name = "pets")
 public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

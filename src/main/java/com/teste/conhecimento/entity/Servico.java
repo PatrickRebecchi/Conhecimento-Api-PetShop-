@@ -5,11 +5,16 @@ import com.teste.conhecimento.entity.enums.StatusAgendamento;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 @Entity
+@Table(name = "servicos")
 public class Servico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
