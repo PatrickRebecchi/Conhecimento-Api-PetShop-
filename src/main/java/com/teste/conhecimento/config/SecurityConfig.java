@@ -10,8 +10,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/cliente*")
-                        .permitAll().anyRequest().authenticated()); // aqui eu libero todas as rotas https que usa o cliente
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/cliente/**").permitAll()
+                        .anyRequest().authenticated()); // aqui eu libero todas as rotas https que usa o cliente
 
         return http.build();
     }

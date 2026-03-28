@@ -14,7 +14,7 @@ public class ValidacaoClienteCriar  implements ValidacaoCriarCliente{
     @Override
     public void validar(ClienteRequest dto){
         if (repository.existsByEmail(dto.email())){
-            throw new BusinessException("Email já cadastrado");
+            throw new BusinessException("Email já cadastrado (Validacao)");
         }
     }
 }
