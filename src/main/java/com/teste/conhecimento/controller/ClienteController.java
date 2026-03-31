@@ -2,10 +2,9 @@ package com.teste.conhecimento.controller;
 
 import com.teste.conhecimento.dto.request.ClienteRequest;
 import com.teste.conhecimento.dto.response.ClienteResponse;
-import com.teste.conhecimento.service.ClienteServico;
+import com.teste.conhecimento.service.ClienteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,7 @@ import java.util.List;
 @RequestMapping("/cliente")
 public class ClienteController {
     @Autowired
-    private ClienteServico servico;
+    private ClienteService servico;
 
     @GetMapping
     public ResponseEntity<List<ClienteResponse>> listarTodosClientes(){

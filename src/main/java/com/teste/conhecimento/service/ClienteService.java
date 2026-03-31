@@ -7,18 +7,14 @@ import com.teste.conhecimento.exception.BusinessException;
 import com.teste.conhecimento.repository.ClienteRepository;
 import com.teste.conhecimento.validation.ValidacaoClienteCriar;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
-import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ClienteServico {
+public class ClienteService {
     @Autowired
     private ClienteRepository repository;
 

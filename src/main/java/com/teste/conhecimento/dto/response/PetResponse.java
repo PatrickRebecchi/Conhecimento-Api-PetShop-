@@ -1,13 +1,16 @@
 package com.teste.conhecimento.dto.response;
 
+import com.teste.conhecimento.entity.enums.Especie;
+import com.teste.conhecimento.entity.enums.Sexo;
+
 public record PetResponse(
         Long id,
         String nome,
         String raca,
         int idade,
-        String especie,
+        Especie especie,
         double peso,
-        String sexo,
+        Sexo sexo,
         Long clienteId,
         String nomeCliente
 ) {}

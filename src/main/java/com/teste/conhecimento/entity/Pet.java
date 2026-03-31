@@ -1,5 +1,6 @@
 package com.teste.conhecimento.entity;
 
+import com.teste.conhecimento.dto.request.PetRequest;
 import com.teste.conhecimento.entity.enums.Especie;
 import com.teste.conhecimento.entity.enums.Sexo;
 import jakarta.persistence.*;
@@ -32,4 +33,16 @@ public class Pet {
 
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
     private List<Servico> servicos;
+
+    protected Pet(){
+
+    }
+
+    public Pet(PetRequest dto){
+        this.nome = dto.nome();
+        this.raca = dto.raca();
+        this.idade = dto.idade();
+        this.especie = dto.tipo();
+        this.sexo = dto.sexo();
+    }
 }

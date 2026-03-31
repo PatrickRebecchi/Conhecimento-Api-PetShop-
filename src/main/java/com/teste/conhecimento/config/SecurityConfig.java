@@ -12,6 +12,7 @@ public class SecurityConfig {
         http .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/cliente/**").permitAll()
+                        .requestMatchers("/pet/**").permitAll()
                         .anyRequest().authenticated()); // aqui eu libero todas as rotas https que usa o cliente
 
         return http.build();
