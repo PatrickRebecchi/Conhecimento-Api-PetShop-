@@ -27,8 +27,8 @@ public class Pet {
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
 
-    @ManyToOne
-    @JoinColumn(name = "cliente_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
@@ -45,4 +45,6 @@ public class Pet {
         this.especie = dto.tipo();
         this.sexo = dto.sexo();
     }
+
+
 }
