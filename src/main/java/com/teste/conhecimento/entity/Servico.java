@@ -1,5 +1,6 @@
 package com.teste.conhecimento.entity;
 
+import com.teste.conhecimento.dto.request.ServicoRequest;
 import com.teste.conhecimento.entity.enums.ServicoOferecido;
 import com.teste.conhecimento.entity.enums.StatusAgendamento;
 import jakarta.persistence.*;
@@ -33,5 +34,17 @@ public class Servico {
     @ManyToOne
     @JoinColumn(name = "pet_id")
     private Pet pet;
+
+    protected Servico(){
+
+    }
+
+    public Servico(ServicoRequest dto, Pet pet) {
+        this.nomeServico = dto.servico();
+        this.preco = dto.preco();
+        this.observacoes = dto.observacao();
+        this.pet = pet;
+        this.status = StatusAgendamento.AGENDADO;
+    }
 
 }

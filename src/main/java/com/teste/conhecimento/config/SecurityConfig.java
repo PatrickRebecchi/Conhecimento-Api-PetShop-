@@ -13,6 +13,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/cliente/**").permitAll()
                         .requestMatchers("/pet/**").permitAll()
+                        .requestMatchers("/servico/**").permitAll()
                         .anyRequest().authenticated()); // aqui eu libero todas as rotas https que usa o cliente
 
         return http.build();
