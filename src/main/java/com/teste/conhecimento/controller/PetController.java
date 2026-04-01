@@ -23,6 +23,11 @@ public class PetController {
         return ResponseEntity.ok(service.buscarTodosPets());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<PetResponse> buscarPorId(@PathVariable @Valid Long id){
+        return ResponseEntity.ok(service.buscarPorId(id));
+    }
+
     @PostMapping
     public ResponseEntity<PetResponse> criarPet(@RequestBody @Valid PetRequest dto){
         return ResponseEntity.status(HttpStatus.CREATED)

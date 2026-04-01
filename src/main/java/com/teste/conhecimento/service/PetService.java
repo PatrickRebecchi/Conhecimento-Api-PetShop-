@@ -8,6 +8,7 @@ import com.teste.conhecimento.exception.BusinessException;
 import com.teste.conhecimento.repository.ClienteRepository;
 import com.teste.conhecimento.repository.PetRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
@@ -65,5 +66,22 @@ public class PetService {
                pet.getSexo(),
                cliente.getId(),
                cliente.getNome());
+    }
+
+    public PetResponse buscarPorId(Long id) {
+        Pet pet = repository.findById(id)
+                .orElseThrow(() -> new BusinessException("Pet não encontrado"));
+
+        return new PetResponse(
+                pet.getId(),
+                pet.getNome(),
+                pet.getRaca(),
+                pet.getIdade(),
+                pet.getEspecie(),
+                pet.getPeso(),
+                pet.getSexo(),
+                pet.getCliente().getId(),
+                pet.getCliente().getNome()
+        );
     }
 }
