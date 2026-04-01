@@ -7,6 +7,7 @@ import com.teste.conhecimento.entity.Servico;
 import com.teste.conhecimento.exception.BusinessException;
 import com.teste.conhecimento.repository.PetRepository;
 import com.teste.conhecimento.repository.ServicoRepository;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class ServicoService {
 
     @Autowired
     private ServicoRepository repository;
-
+    @Transactional
     public List<ServicoResponse> buscarServico() {
     return converteDadosServico(repository.findAll());
     }
@@ -43,6 +44,7 @@ public class ServicoService {
                 .toList();
     }
 
+    @Transactional
     public ServicoResponse criarServico(ServicoRequest dto) {
         Pet pet = petRepository.findById(dto.petId())
                 .orElseThrow(() -> new BusinessException("Pet não encontrado"));
