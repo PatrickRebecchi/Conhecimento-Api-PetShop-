@@ -1,7 +1,9 @@
 package com.teste.conhecimento.controller;
 
 import com.teste.conhecimento.dto.request.ClienteRequest;
+import com.teste.conhecimento.dto.request.ClienteUpdateRequest;
 import com.teste.conhecimento.dto.response.ClienteResponse;
+import com.teste.conhecimento.dto.response.ClienteUpdateResponse;
 import com.teste.conhecimento.service.ClienteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,21 +17,27 @@ import java.util.List;
 @RequestMapping("/cliente")
 public class ClienteController {
     @Autowired
-    private ClienteService servico;
+    private ClienteService service;
 
     @GetMapping
     public ResponseEntity<List<ClienteResponse>> listarTodosClientes(){
-        return ResponseEntity.ok(servico.obterTodosClientes());
+        return ResponseEntity.ok(service.obterTodosClientes());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ClienteResponse> buscarClientePorId(@PathVariable Long id){
-        return ResponseEntity.ok(servico.obterClientePorId(id));
+        return ResponseEntity.ok(service.obterClientePorId(id));
     }
 
     @PostMapping
     public ResponseEntity<ClienteResponse> CriarCliente(@RequestBody @Valid ClienteRequest dto){
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(servico.criarCliente(dto));
+                .body(service.criarCliente(dto));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ClienteUpdateResponse> atualizarCliente(@PathVariable Long id, @RequestBody @Valid ClienteUpdateRequest dto){
+        return ResponseEntity.ok(service.atualizarCliente(id, dto));
+
     }
 }
