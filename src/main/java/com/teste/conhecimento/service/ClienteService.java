@@ -1,12 +1,18 @@
 package com.teste.conhecimento.service;
 
 import com.teste.conhecimento.dto.request.ClienteRequest;
+import com.teste.conhecimento.dto.request.ClienteUpdateRequest;
+import com.teste.conhecimento.dto.request.VerificarIdCliente;
 import com.teste.conhecimento.dto.response.ClienteResponse;
+import com.teste.conhecimento.dto.response.ClienteUpdateResponse;
 import com.teste.conhecimento.entity.Cliente;
 import com.teste.conhecimento.exception.BusinessException;
 import com.teste.conhecimento.repository.ClienteRepository;
+import com.teste.conhecimento.validation.ValidacaoAtualizarCliente;
+import com.teste.conhecimento.validation.ValidacaoClienteAtualizar;
 import com.teste.conhecimento.validation.ValidacaoClienteCriar;
 import jakarta.transaction.Transactional;
+import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +26,9 @@ public class ClienteService {
 
     @Autowired
     private List<ValidacaoClienteCriar> validacao;
+    @Autowired
+    private List<ValidacaoClienteAtualizar> validacaoClienteAtualizars;
+
 
     public List<ClienteResponse> obterTodosClientes() {
         return converteDados(repository.findAll());
@@ -63,6 +72,36 @@ public class ClienteService {
                 cliente.getTelefone(),
                 cliente.getEmail(),
                 0
+        );
+    }
+
+    @Transactional
+    public ClienteUpdateResponse atualizarCliente(Long id, ClienteUpdateRequest dto) {
+        Cliente cliente = repository.findById(id)
+                .orElseThrow(() -> new BusinessException("Cliente não encontrado."));
+
+        validacaoClienteAtualizars.forEach(c -> c.validar(dto));
+        boolean atualizado = false;
+
+        if (dto.nome() != null && !dto.nome().equals(cliente.getNome())) {
+            cliente.setNome(dto.nome());
+            atualizado = true;
+        }
+        if (dto.telefone() != null && !dto.telefone().equals(cliente.getTelefone())) {
+            cliente.setTelefone(dto.telefone());
+            atualizado = true;
+        }
+        if (dto.email() != null && !dto.email().equals(cliente.getEmail())) {
+            cliente.setEmail(dto.email());
+            atualizado = true;
+        }
+
+        return new ClienteUpdateResponse(
+                cliente.getId(),
+                cliente.getNome(),
+                cliente.getTelefone(),
+                cliente.getEmail(),
+                "Cliente atualizado com sucesso!"
         );
     }
 }
