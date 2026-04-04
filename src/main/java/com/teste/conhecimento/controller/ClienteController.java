@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/cliente")
@@ -38,6 +39,11 @@ public class ClienteController {
     @PatchMapping("/{id}")
     public ResponseEntity<ClienteUpdateResponse> atualizarCliente(@PathVariable Long id, @RequestBody @Valid ClienteUpdateRequest dto){
         return ResponseEntity.ok(service.atualizarCliente(id, dto));
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, String>> eccluirCliente(@PathVariable long id){
+        service.excluirCliente(id);
+        return ResponseEntity.ok(Map.of("Mensagem", "Cliente deletado com sucesso"));
     }
 }

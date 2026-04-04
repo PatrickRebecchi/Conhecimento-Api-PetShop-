@@ -2,17 +2,15 @@ package com.teste.conhecimento.service;
 
 import com.teste.conhecimento.dto.request.ClienteRequest;
 import com.teste.conhecimento.dto.request.ClienteUpdateRequest;
-import com.teste.conhecimento.dto.request.VerificarIdCliente;
 import com.teste.conhecimento.dto.response.ClienteResponse;
 import com.teste.conhecimento.dto.response.ClienteUpdateResponse;
 import com.teste.conhecimento.entity.Cliente;
 import com.teste.conhecimento.exception.BusinessException;
 import com.teste.conhecimento.repository.ClienteRepository;
-import com.teste.conhecimento.validation.ValidacaoAtualizarCliente;
 import com.teste.conhecimento.validation.ValidacaoClienteAtualizar;
 import com.teste.conhecimento.validation.ValidacaoClienteCriar;
+import com.teste.conhecimento.validation.ValidacaoClienteDeletar;
 import jakarta.transaction.Transactional;
-import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +25,9 @@ public class ClienteService {
     @Autowired
     private List<ValidacaoClienteCriar> validacao;
     @Autowired
-    private List<ValidacaoClienteAtualizar> validacaoClienteAtualizars;
+    private List<ValidacaoClienteAtualizar> validacaoClienteAtualizar;
+    @Autowired
+    private List<ValidacaoClienteDeletar> validacaoClienteDeletar;
 
 
     public List<ClienteResponse> obterTodosClientes() {
@@ -80,7 +80,7 @@ public class ClienteService {
         Cliente cliente = repository.findById(id)
                 .orElseThrow(() -> new BusinessException("Cliente não encontrado."));
 
-        validacaoClienteAtualizars.forEach(c -> c.validar(dto));
+        validacaoClienteAtualizar.forEach(c -> c.validar(dto));
         boolean atualizado = false;
 
         if (dto.nome() != null && !dto.nome().equals(cliente.getNome())) {
@@ -103,5 +103,10 @@ public class ClienteService {
                 cliente.getEmail(),
                 "Cliente atualizado com sucesso!"
         );
+    }
+
+    public void excluirCliente(long id) {
+        validacaoClienteDeletar.forEach(c -> c.validar(id));
+        repository.deleteById(id);
     }
 }
