@@ -1,22 +1,24 @@
 # 🐾 Pet Shop - Sistema de Gerenciamento
 
-Sistema completo para gerenciamento de Pet Shop com Backend (Java/Spring Boot) e Frontend (Angular).
+Aplicação **fullstack** para gerenciamento de pet shop, permitindo o controle de clientes, pets e serviços, com dashboard de métricas e integração entre backend (Spring Boot) e frontend (Angular).
 
 ---
 
 ## 🚀 Tecnologias
 
 ### Backend
-- Java 17+
-- Spring Boot
-- Spring Data JPA
-- Spring Security
-- H2 Database (embutido)
+
+* Java 17+
+* Spring Boot
+* Spring Data JPA
+* Spring Security
+* H2 Database
 
 ### Frontend
-- Angular 21
-- TypeScript
-- CSS3 Moderno
+
+* Angular
+* TypeScript
+* CSS3
 
 ---
 
@@ -24,14 +26,14 @@ Sistema completo para gerenciamento de Pet Shop com Backend (Java/Spring Boot) e
 
 ```
 conhecimento/
-├── src/                    # Backend Java/Spring
-├── frontend/                # Frontend Angular
+├── src/                    # Backend (Spring Boot)
+├── frontend/              # Frontend (Angular)
 │   └── src/app/
-│       ├── components/     # Componentes (cliente, pet, servico, home)
-│       ├── models/         # Interfaces TypeScript
-│       └── services/      # Serviços API
+│       ├── components/    # Componentes (cliente, pet, servico, home)
+│       ├── models/        # Interfaces TypeScript
+│       └── services/      # Comunicação com API
 ├── pom.xml                # Dependências Java
-└── package.json         # Dependências Angular
+└── package.json           # Dependências Angular
 ```
 
 ---
@@ -39,20 +41,23 @@ conhecimento/
 ## ▶️ Como Executar
 
 ### Pré-requisitos
-- Java 17+
-- Node.js 18+
-- Angular CLI
 
-### Backend
+* Java 17+
+* Node.js 18+
+* Angular CLI
+
+### 🔧 Backend
 
 ```bash
-# Na pasta raiz do projeto
 ./mvnw spring-boot:run
 ```
 
-A API estará disponível em: `http://localhost:8080`
+API disponível em:
+👉 http://localhost:8080
 
-### Frontend
+---
+
+### 💻 Frontend
 
 ```bash
 cd frontend
@@ -60,51 +65,87 @@ npm install
 ng serve
 ```
 
-O frontend estará disponível em: `http://localhost:4200`
+Aplicação disponível em:
+👉 http://localhost:4200
 
 ---
 
 ## 📱 Funcionalidades
 
 ### 👥 Clientes
-- Listar todos os clientes
-- Cadastrar novo cliente
-- Editar cliente
-- Excluir cliente
-- Validação de email único
+
+* Listar clientes
+* Cadastrar novo cliente
+* Editar cliente
+* Excluir cliente
+* Validação de email único
 
 ### 🐶 Pets
-- Listar todos os pets
-- Cadastrar novo pet (vinculado a um cliente)
-- Visualizar宠物 relacionados ao dono
+
+* Listar pets
+* Cadastrar pet vinculado a um cliente
+* Visualizar pets por cliente
 
 ### ✂️ Serviços
-- Listar serviços realizados
-- Cadastrar novo serviço (banho, tosa, consulta, etc.)
-- Visualizar pet atendido
 
-### 🏠 Página Inicial
-- Dashboard com统计ísticas
-- Contagem de clientes, pets e serviços
-- Ações rápidas para cadastro
+* Listar serviços realizados
+* Cadastrar serviços (banho, tosa, consulta, etc.)
+* Vincular serviço a um pet
+
+### 🏠 Dashboard
+
+* Contagem de clientes, pets e serviços
+* Visualização geral do sistema
+
+---
+
+## 🧠 Regras de Negócio
+
+* Um cliente pode possuir vários pets
+* Um pet pertence a apenas um cliente
+* Um serviço está sempre vinculado a um pet
+* O email do cliente deve ser único no sistema
 
 ---
 
 ## 🔗 Endpoints da API
 
-| Método | Endpoint         | Descrição           |
-| ------ | --------------- | ------------------|
-| GET    | /cliente        | Listar clientes    |
-| POST   | /cliente       | Criar cliente     |
-| PATCH  | /cliente/{id}  | Atualizar cliente |
-| DELETE | /cliente/{id}  | Excluir cliente  |
-| GET    | /pet           | Listar pets      |
-| POST   | /pet           | Criar pet         |
-| GET    | /servico       | Listar serviços  |
-| POST   | /servico       | Criar serviço    |
+| Método | Endpoint      | Descrição         |
+| ------ | ------------- | ----------------- |
+| GET    | /cliente      | Listar clientes   |
+| POST   | /cliente      | Criar cliente     |
+| PATCH  | /cliente/{id} | Atualizar cliente |
+| DELETE | /cliente/{id} | Excluir cliente   |
+| GET    | /pet          | Listar pets       |
+| POST   | /pet          | Criar pet         |
+| GET    | /servico      | Listar serviços   |
+| POST   | /servico      | Criar serviço     |
 
 ---
 
-## 📄 Licença
+## ⭐ Diferenciais
 
-MIT
+* Arquitetura em camadas (Controller, Service, Repository)
+* Integração completa entre frontend e backend
+* Validações de dados no backend
+* Relacionamento entre entidades (Cliente ↔ Pet ↔ Serviço)
+* Projeto fullstack com separação clara de responsabilidades
+
+---
+
+## 🔧 Melhorias Futuras
+
+* Autenticação com JWT
+* Paginação e filtros
+* Testes automatizados (JUnit / MockMvc)
+* Documentação com Swagger
+* Deploy da aplicação
+
+---
+
+## 👨‍💻 Autor
+
+Desenvolvido por Patrick Rebecchi
+🔗 https://github.com/PatrickRebecchi
+
+---
