@@ -1,187 +1,110 @@
-# 🐾 API Pet Shop
+# 🐾 Pet Shop - Sistema de Gerenciamento
 
-API REST desenvolvida com **Java + Spring Boot** para gerenciamento de um Pet Shop, permitindo cadastro de clientes, pets, serviços e agendamentos.
-
----
-
-## 🚀 Tecnologias utilizadas
-
-* ☕ Java 17+
-* 🌱 Spring Boot
-* 🗄️ Spring Data JPA
-* 🔐 Spring Validation
-* 🐘 Banco de dados relacional (PostgreSQL ou H2)
-* 📦 Maven
+Sistema completo para gerenciamento de Pet Shop com Backend (Java/Spring Boot) e Frontend (Angular).
 
 ---
 
-## 📌 Funcionalidades
+## 🚀 Tecnologias
 
-### 👤 Cliente
+### Backend
+- Java 17+
+- Spring Boot
+- Spring Data JPA
+- Spring Security
+- H2 Database (embutido)
 
-* Criar cliente
-* Listar clientes
-* Buscar cliente por ID
-* Validação de email único
-
-### 🐶 Pet
-
-* Cadastrar pet vinculado a um cliente
-* Listar pets
-* Relacionamento com cliente
-
-### ✂️ Serviço
-
-* Cadastro de serviços (banho, tosa, etc.)
-* Controle de preço
-
-### 📅 Agendamento
-
-* Criar agendamentos
-* Associar pet, funcionário e serviços
-* Controle de status
+### Frontend
+- Angular 21
+- TypeScript
+- CSS3 Moderno
 
 ---
 
-## 🧠 Regras de negócio
-
-* ❌ Não permite cadastro de clientes com email duplicado
-* ✅ Validação de campos obrigatórios (nome, email, etc.)
-* 🔁 Relacionamento entre cliente e pets
-* 📌 Uso de enums para padronização de dados
-
----
-
-## 🗂️ Estrutura do projeto
+## 📁 Estrutura do Projeto
 
 ```
-src/main/java/com/seuprojeto
-│
-├── controller
-├── service
-├── repository
-├── entity
-├── dto
-│   ├── request
-│   └── response
-├── enums
-├── exception
-└── validation
+conhecimento/
+├── src/                    # Backend Java/Spring
+├── frontend/                # Frontend Angular
+│   └── src/app/
+│       ├── components/     # Componentes (cliente, pet, servico, home)
+│       ├── models/         # Interfaces TypeScript
+│       └── services/      # Serviços API
+├── pom.xml                # Dependências Java
+└── package.json         # Dependências Angular
 ```
 
 ---
 
-## 🔄 Exemplo de requisição
+## ▶️ Como Executar
 
-### ➕ Criar cliente
+### Pré-requisitos
+- Java 17+
+- Node.js 18+
+- Angular CLI
 
-**POST /clientes**
-
-```json
-{
-  "nome": "Patrick",
-  "telefone": "11999999999",
-  "email": "patrick@email.com"
-}
-```
-
----
-
-## 📥 Exemplo de resposta
-
-```json
-{
-  "id": 1,
-  "nome": "Patrick",
-  "telefone": "11999999999",
-  "email": "patrick@email.com",
-  "quantidadePets": 0
-}
-```
-
----
-
-## ⚠️ Tratamento de erros
-
-A API possui tratamento global de exceções com respostas padronizadas:
-
-```json
-{
-  "message": "Email já cadastrado",
-  "httpStatus": "409 CONFLICT",
-  "time": "2026-03-27T00:00:00"
-}
-```
-
----
-
-## ▶️ Como executar o projeto
-
-### 1. Clonar o repositório
+### Backend
 
 ```bash
-git clone https://github.com/seu-usuario/seu-repo.git
-```
-
----
-
-### 2. Acessar a pasta
-
-```bash
-cd seu-repo
-```
-
----
-
-### 3. Rodar a aplicação
-
-```bash
+# Na pasta raiz do projeto
 ./mvnw spring-boot:run
 ```
 
-ou
+A API estará disponível em: `http://localhost:8080`
+
+### Frontend
 
 ```bash
-mvn spring-boot:run
+cd frontend
+npm install
+ng serve
 ```
 
----
-
-## 🔗 Endpoints principais
-
-| Método | Endpoint       | Descrição       |
-| ------ | -------------- | --------------- |
-| POST   | /clientes      | Criar cliente   |
-| GET    | /clientes      | Listar clientes |
-| GET    | /clientes/{id} | Buscar por ID   |
+O frontend estará disponível em: `http://localhost:4200`
 
 ---
 
-## 📈 Melhorias futuras
+## 📱 Funcionalidades
 
-* 🔐 Autenticação com JWT
-* 📄 Documentação com Swagger
-* 📊 Paginação e filtros
-* 🧪 Testes automatizados
+### 👥 Clientes
+- Listar todos os clientes
+- Cadastrar novo cliente
+- Editar cliente
+- Excluir cliente
+- Validação de email único
+
+### 🐶 Pets
+- Listar todos os pets
+- Cadastrar novo pet (vinculado a um cliente)
+- Visualizar宠物 relacionados ao dono
+
+### ✂️ Serviços
+- Listar serviços realizados
+- Cadastrar novo serviço (banho, tosa, consulta, etc.)
+- Visualizar pet atendido
+
+### 🏠 Página Inicial
+- Dashboard com统计ísticas
+- Contagem de clientes, pets e serviços
+- Ações rápidas para cadastro
+
+---
+
+## 🔗 Endpoints da API
+
+| Método | Endpoint         | Descrição           |
+| ------ | --------------- | ------------------|
+| GET    | /cliente        | Listar clientes    |
+| POST   | /cliente       | Criar cliente     |
+| PATCH  | /cliente/{id}  | Atualizar cliente |
+| DELETE | /cliente/{id}  | Excluir cliente  |
+| GET    | /pet           | Listar pets      |
+| POST   | /pet           | Criar pet         |
+| GET    | /servico       | Listar serviços  |
+| POST   | /servico       | Criar serviço    |
 
 ---
 
-## 👨‍💻 Autor
+## 📄 Licença
 
-Desenvolvido por **Patrick**
-
-🔗 GitHub: https://github.com/PatrickRebecchi
-
----
-
-## 💬 Observações
-
-Este projeto foi desenvolvido com foco em aprendizado, aplicando boas práticas de desenvolvimento backend como:
-
-* Separação de camadas
-* Uso de DTOs
-* Tratamento de exceções
-* Validações
-* Organização de código
-
----
+MIT

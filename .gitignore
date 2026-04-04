@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Angular Frontend ###
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/coverage/
