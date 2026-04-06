@@ -8,7 +8,10 @@ import { Servico, ServicoRequest } from '../models';
 })
 export class ServicoService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/servico';
+  // <environment_details>
+  // Original: http://localhost:8080/servico
+  // </environment_details>
+  private apiUrl = 'https://api-petshop-fb5j.onrender.com/servico';
 
   getAll(): Observable<Servico[]> {
     return this.http.get<Servico[]>(this.apiUrl);

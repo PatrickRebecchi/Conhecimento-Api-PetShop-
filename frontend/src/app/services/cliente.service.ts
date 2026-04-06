@@ -8,7 +8,10 @@ import { Cliente, ClienteRequest, ClienteUpdateRequest } from '../models';
 })
 export class ClienteService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/cliente';
+  // <environment_details>
+  // Original: http://localhost:8080/cliente
+  // </environment_details>
+  private apiUrl = 'https://api-petshop-fb5j.onrender.com/cliente';
 
   getAll(): Observable<Cliente[]> {
     return this.http.get<Cliente[]>(this.apiUrl);

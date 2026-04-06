@@ -8,7 +8,10 @@ import { Pet, PetRequest } from '../models';
 })
 export class PetService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/pet';
+  // <environment_details>
+  // Original: http://localhost:8080/pet
+  // </environment_details>
+  private apiUrl = 'https://api-petshop-fb5j.onrender.com/pet';
 
   getAll(): Observable<Pet[]> {
     return this.http.get<Pet[]>(this.apiUrl);
