@@ -39,6 +39,7 @@ export class ClienteFormComponent implements OnInit {
   private route = inject(ActivatedRoute);
 
   cliente: ClienteRequest = { nome: '', telefone: '', email: '' };
+  clienteOriginal: ClienteRequest = { nome: '', telefone: '', email: '' };
   isEdit = false;
   clienteId?: number;
 
@@ -60,6 +61,7 @@ export class ClienteFormComponent implements OnInit {
             telefone: data.telefone || '',
             email: data.email
           };
+          this.clienteOriginal = { ...this.cliente };
         },
         error: (err) => console.error('Erro ao carregar cliente', err)
       });
@@ -68,9 +70,27 @@ export class ClienteFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.isEdit && this.clienteId) {
-      this.clienteService.update(this.clienteId, this.cliente).subscribe({
+      const dadosAlterados: any = {};
+      
+      if (this.cliente.nome !== this.clienteOriginal.nome) {
+        dadosAlterados.nome = this.cliente.nome;
+      }
+      if (this.cliente.telefone !== this.clienteOriginal.telefone) {
+        dadosAlterados.telefone = this.cliente.telefone;
+      }
+      if (this.cliente.email !== this.clienteOriginal.email) {
+        dadosAlterados.email = this.cliente.email;
+      }
+      
+      if (Object.keys(dadosAlterados).length === 0) {
+        alert('Nenhuma alteração detectada');
+        return;
+      }
+      
+      this.clienteService.update(this.clienteId, dadosAlterados).subscribe({
         next: () => {
           alert('Cliente atualizado com sucesso');
+          this.clienteOriginal = { ...this.cliente };
           this.router.navigate(['/clientes']);
         },
         error: (err) => {
