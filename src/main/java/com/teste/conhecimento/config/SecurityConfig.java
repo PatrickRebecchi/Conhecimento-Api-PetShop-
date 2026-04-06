@@ -20,6 +20,7 @@ public class SecurityConfig {
                         .requestMatchers("/cliente/**").permitAll()
                         .requestMatchers("/pet/**").permitAll()
                         .requestMatchers("/servico/**").permitAll()
+                        .requestMatchers("/servico-catalogo/**").permitAll()
                         .anyRequest().authenticated());
 
         return http.build();
