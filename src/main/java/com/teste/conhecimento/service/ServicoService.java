@@ -42,7 +42,7 @@ public class ServicoService {
                         s.getObservacoes(),
                         s.getPet().getId(),
                         s.getPet().getNome(),
-                        s.getPet().getEspecie().name()
+                        s.getPet().getEspecie() != null ? s.getPet().getEspecie().name() : null
                 ))
                 .toList();
     }
@@ -66,6 +66,6 @@ public class ServicoService {
                 servico.getObservacoes(),
                 servico.getPet().getId(),
                 servico.getPet().getNome(),
-                servico.getPet().getEspecie().name());
+                servico.getPet().getEspecie() != null ? servico.getPet().getEspecie().name() : null);
     }
 }
