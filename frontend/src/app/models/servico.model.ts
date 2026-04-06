@@ -1,20 +1,24 @@
-export enum ServicoOferecido {
-  BANHO = 'BANHO',
-  TOSA = 'TOSA',
-  CORTE_UNHA = 'CORTE_UNHA',
-  VACINACAO = 'VACINACAO',
-  CONSULTA = 'CONSULTA'
-}
-
 export enum StatusAgendamento {
   AGENDADO = 'AGENDADO',
   CANCELADO = 'CANCELADO',
   FINALIZADO = 'FINALIZADO'
 }
 
+export interface ServicoCatalogo {
+  id: number;
+  nome: string;
+  preco: number;
+  ativo: boolean;
+}
+
+export interface ServicoCatalogoRequest {
+  nome: string;
+  preco: number;
+}
+
 export interface Servico {
   id?: number;
-  nomeServico: ServicoOferecido;
+  nomeServico: string;
   preco: number;
   createAt?: string;
   status: StatusAgendamento;
@@ -25,7 +29,7 @@ export interface Servico {
 }
 
 export interface ServicoRequest {
-  servico: ServicoOferecido;
+  servicoCatalogoId: number;
   preco: number;
   observacao: string;
   petId: number;

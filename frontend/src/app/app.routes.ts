@@ -6,6 +6,8 @@ import { PetListComponent } from './components/pet/pet-list.component';
 import { PetFormComponent } from './components/pet/pet-form.component';
 import { ServicoListComponent } from './components/servico/servico-list.component';
 import { ServicoFormComponent } from './components/servico/servico-form.component';
+import { ServicoCatalogoListComponent } from './components/servico-catalogo/servico-catalogo-list.component';
+import { ServicoCatalogoFormComponent } from './components/servico-catalogo/servico-catalogo-form.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,5 +18,8 @@ export const routes: Routes = [
   { path: 'pets/novo', component: PetFormComponent },
   { path: 'servicos', component: ServicoListComponent },
   { path: 'servicos/novo', component: ServicoFormComponent },
+  { path: 'servicos-catalogo', component: ServicoCatalogoListComponent },
+  { path: 'servicos-catalogo/novo', component: ServicoCatalogoFormComponent },
+  { path: 'servicos-catalogo/editar/:id', component: ServicoCatalogoFormComponent },
   { path: '**', redirectTo: '' }
 ];

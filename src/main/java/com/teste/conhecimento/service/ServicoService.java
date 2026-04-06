@@ -4,17 +4,16 @@ import com.teste.conhecimento.dto.request.ServicoRequest;
 import com.teste.conhecimento.dto.response.ServicoResponse;
 import com.teste.conhecimento.entity.Pet;
 import com.teste.conhecimento.entity.Servico;
+import com.teste.conhecimento.entity.ServicoCatalogo;
 import com.teste.conhecimento.exception.BusinessException;
 import com.teste.conhecimento.repository.PetRepository;
+import com.teste.conhecimento.repository.ServicoCatalogoRepository;
 import com.teste.conhecimento.repository.ServicoRepository;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
-import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ServicoService {
@@ -23,23 +22,27 @@ public class ServicoService {
 
     @Autowired
     private ServicoRepository repository;
+
+    @Autowired
+    private ServicoCatalogoRepository servicoCatalogoRepository;
+
     @Transactional
     public List<ServicoResponse> buscarServico() {
-    return converteDadosServico(repository.findAll());
+        return converteDadosServico(repository.findAll());
     }
 
-    private List<ServicoResponse> converteDadosServico(List<Servico> servicos){
+    private List<ServicoResponse> converteDadosServico(List<Servico> servicos) {
         return servicos.stream()
                 .map(s -> new ServicoResponse(
                         s.getId(),
-                        s.getNomeServico(),
+                        s.getServicoCatalogo().getNome(),
                         s.getPreco(),
                         s.getCreateAt(),
                         s.getStatus(),
                         s.getObservacoes(),
                         s.getPet().getId(),
                         s.getPet().getNome(),
-                        s.getPet().getEspecie()
+                        s.getPet().getEspecie().name()
                 ))
                 .toList();
     }
@@ -49,20 +52,20 @@ public class ServicoService {
         Pet pet = petRepository.findById(dto.petId())
                 .orElseThrow(() -> new BusinessException("Pet não encontrado"));
 
-        Servico servico = new Servico(dto, pet);
+        ServicoCatalogo catalogo = servicoCatalogoRepository.findById(dto.servicoCatalogoId())
+                .orElseThrow(() -> new BusinessException("Serviço do catálogo não encontrado"));
 
+        Servico servico = new Servico(dto, catalogo, pet);
         servico = repository.save(servico);
 
         return new ServicoResponse(servico.getId(),
-                servico.getNomeServico(),
+                servico.getServicoCatalogo().getNome(),
                 servico.getPreco(),
                 servico.getCreateAt(),
                 servico.getStatus(),
                 servico.getObservacoes(),
                 servico.getPet().getId(),
                 servico.getPet().getNome(),
-                servico.getPet().getEspecie());
-
+                servico.getPet().getEspecie().name());
     }
 }
-
