@@ -11,6 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+
 import java.util.List;
 import java.util.Map;
 
@@ -21,8 +25,18 @@ public class ClienteController {
     private ClienteService service;
 
     @GetMapping
-    public ResponseEntity<List<ClienteResponse>> listarTodosClientes(){
-        return ResponseEntity.ok(service.obterTodosClientes());
+    public ResponseEntity<Page<ClienteResponse>> listarTodosClientes(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir){
+        
+        Sort sort = sortDir.equalsIgnoreCase("desc") 
+                ? Sort.by(sortBy).descending() 
+                : Sort.by(sortBy).ascending();
+        
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
+        return ResponseEntity.ok(service.obterTodosClientes(pageRequest));
     }
 
     @GetMapping("/{id}")

@@ -12,6 +12,8 @@ import com.teste.conhecimento.validation.ValidacaoClienteCriar;
 import com.teste.conhecimento.validation.ValidacaoClienteDeletar;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +31,17 @@ public class ClienteService {
     @Autowired
     private List<ValidacaoClienteDeletar> validacaoClienteDeletar;
 
+
+    public Page<ClienteResponse> obterTodosClientes(PageRequest pageRequest) {
+        Page<Cliente> clientes = repository.findAll(pageRequest);
+        return clientes.map(c -> new ClienteResponse(
+                c.getId(),
+                c.getNome(),
+                c.getTelefone(),
+                c.getEmail(),
+                c.getPetList() != null ? c.getPetList().size() : 0
+        ));
+    }
 
     public List<ClienteResponse> obterTodosClientes() {
         return converteDados(repository.findAll());
