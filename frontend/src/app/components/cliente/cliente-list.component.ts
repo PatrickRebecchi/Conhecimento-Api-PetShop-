@@ -81,12 +81,35 @@ export class ClienteListComponent implements OnInit {
   loadClientes(): void {
     console.log('Carregando clientes página:', this.currentPage);
     this.clienteService.getAll(this.currentPage, this.pageSize).subscribe({
-      next: (data) => {
-        console.log('Dados recebidos:', data);
-        this.clientes = data.content;
+      next: (data: any) => {
+        console.log('Resposta completa:', JSON.stringify(data, null, 2));
+        console.log('Content:', data.content);
+        console.log('Keys:', Object.keys(data));
+        
+        if (data.content && Array.isArray(data.content)) {
+          this.clientes = data.content;
+        } else if (Array.isArray(data)) {
+          this.clientes = data;
+          this.pageData = {
+            content: data,
+            totalElements: data.length,
+            totalPages: 1,
+            size: data.length,
+            number: 0,
+            first: true,
+            last: true,
+            empty: data.length === 0
+          };
+        } else {
+          console.error('Estrutura inesperada:', data);
+          this.clientes = [];
+        }
         this.pageData = data;
       },
-      error: (err) => console.error('Erro ao carregar clientes', err)
+      error: (err) => {
+        console.error('Erro ao carregar clientes:', err);
+        alert('Erro ao carregar clientes: ' + (err.message || 'Erro desconhecido'));
+      }
     });
   }
 
