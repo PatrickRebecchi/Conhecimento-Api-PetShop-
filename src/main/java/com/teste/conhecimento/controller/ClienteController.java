@@ -39,6 +39,11 @@ public class ClienteController {
         return ResponseEntity.ok(service.obterTodosClientes(pageRequest));
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<ClienteResponse>> listarTodosClientesSemPaginacao(){
+        return ResponseEntity.ok(service.obterTodosClientes());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ClienteResponse> buscarClientePorId(@PathVariable Long id){
         return ResponseEntity.ok(service.obterClientePorId(id));

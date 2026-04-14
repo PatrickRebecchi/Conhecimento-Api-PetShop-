@@ -82,7 +82,7 @@ export class PetFormComponent implements OnInit {
   }
 
   loadClientes(): void {
-    this.clienteService.getAll().subscribe({
+    this.clienteService.getAllList().subscribe({
       next: (data) => this.clientes = data,
       error: (err) => console.error('Erro ao carregar clientes', err)
     });

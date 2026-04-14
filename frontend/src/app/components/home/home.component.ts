@@ -221,7 +221,7 @@ export class HomeComponent implements OnInit {
   }
   
   loadCounts(): void {
-    this.clienteService.getAll().subscribe({
+    this.clienteService.getAllList().subscribe({
       next: (data) => {
         console.log('Clientes carregados:', data);
         this.totalClientes = data.length;
