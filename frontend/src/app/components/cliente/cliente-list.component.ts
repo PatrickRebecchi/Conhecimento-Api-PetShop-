@@ -83,11 +83,22 @@ export class ClienteListComponent implements OnInit {
     this.clienteService.getAll(this.currentPage, this.pageSize).subscribe({
       next: (data: any) => {
         console.log('Resposta completa:', JSON.stringify(data, null, 2));
-        console.log('Content:', data.content);
+        console.log('Content:', data?.content);
         console.log('Keys:', Object.keys(data));
+        console.log('data.content length:', data?.content?.length);
         
-        if (data.content && Array.isArray(data.content)) {
+        if (data?.content && Array.isArray(data.content)) {
           this.clientes = data.content;
+          this.pageData = {
+            content: data.content,
+            totalElements: data.totalElements,
+            totalPages: data.totalPages,
+            size: data.size,
+            number: data.number,
+            first: data.first,
+            last: data.last,
+            empty: data.empty
+          };
         } else if (Array.isArray(data)) {
           this.clientes = data;
           this.pageData = {
@@ -104,7 +115,6 @@ export class ClienteListComponent implements OnInit {
           console.error('Estrutura inesperada:', data);
           this.clientes = [];
         }
-        this.pageData = data;
       },
       error: (err) => {
         console.error('Erro ao carregar clientes:', err);
