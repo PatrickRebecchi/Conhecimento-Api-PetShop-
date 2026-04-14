@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ClienteService } from '../../services';
-import { Cliente } from '../../models';
+import { Cliente, ClientePage } from '../../models';
 
 @Component({
   selector: 'app-cliente-list',
@@ -14,6 +14,10 @@ import { Cliente } from '../../models';
       <div class="actions">
         <a routerLink="/clientes/novo" class="btn btn-primary">+ Novo Cliente</a>
         <button (click)="loadClientes()" class="btn btn-secondary">Atualizar</button>
+      </div>
+      <div class="pagination-info">
+        Mostrando {{ clientes.length }} de {{ pageData.totalElements }} clientes
+        (Página {{ pageData.number + 1 }} de {{ pageData.totalPages }})
       </div>
       <table *ngIf="clientes.length > 0">
         <thead>
@@ -41,26 +45,63 @@ import { Cliente } from '../../models';
         </tbody>
       </table>
       <p *ngIf="clientes.length === 0" class="empty-state">Nenhum cliente encontrado</p>
+      
+      <div class="pagination" *ngIf="pageData.totalPages > 1">
+        <button (click)="previousPage()" [disabled]="pageData.first" class="btn btn-secondary">
+          Anterior
+        </button>
+        <span class="page-info">Página {{ pageData.number + 1 }} de {{ pageData.totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="pageData.last" class="btn btn-secondary">
+          Próxima
+        </button>
+      </div>
     </div>
   `
 })
 export class ClienteListComponent implements OnInit {
   private clienteService = inject(ClienteService);
   clientes: Cliente[] = [];
+  currentPage = 0;
+  pageSize = 30;
+  pageData: ClientePage = {
+    content: [],
+    totalElements: 0,
+    totalPages: 0,
+    size: 30,
+    number: 0,
+    first: true,
+    last: true,
+    empty: true
+  };
 
   ngOnInit(): void {
     this.loadClientes();
   }
 
   loadClientes(): void {
-    console.log('Carregando clientes...');
-    this.clienteService.getAll().subscribe({
+    console.log('Carregando clientes página:', this.currentPage);
+    this.clienteService.getAll(this.currentPage, this.pageSize).subscribe({
       next: (data) => {
         console.log('Dados recebidos:', data);
-        this.clientes = data;
+        this.clientes = data.content;
+        this.pageData = data;
       },
       error: (err) => console.error('Erro ao carregar clientes', err)
     });
+  }
+
+  previousPage(): void {
+    if (!this.pageData.first) {
+      this.currentPage--;
+      this.loadClientes();
+    }
+  }
+
+  nextPage(): void {
+    if (!this.pageData.last) {
+      this.currentPage++;
+      this.loadClientes();
+    }
   }
 
   deleteCliente(id: number): void {
