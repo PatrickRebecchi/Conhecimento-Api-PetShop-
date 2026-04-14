@@ -1,0 +1,8 @@
+{
+  "buildCommand": "cd frontend && npm run build",
+  "outputDirectory": "frontend/dist/frontend/browser",
+  "framework": "angular",
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "https://api-petshop-fb5j.onrender.com/$1" }
+  ]
+}
