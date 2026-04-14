@@ -27,7 +27,7 @@ public class ClienteController {
     @GetMapping
     public ResponseEntity<Page<ClienteResponse>> listarTodosClientes(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "1000") int size,
+            @RequestParam(defaultValue = "30") int size,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir){
         
